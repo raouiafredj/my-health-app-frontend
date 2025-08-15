@@ -10,6 +10,7 @@ import {
   Box,
   Alert
 } from '@mui/material';
+import API_URL from '../config/api';
 
 export default function ProposerPartage() {
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ export default function ProposerPartage() {
 
   try {
     // ✅ Ajout : Récupérer le médecin par email
-    const medecinRes = await fetch(`http://localhost:5000/api/users?email=${medecinEmail}`, {
+    const medecinRes = await fetch(`${API_URL}/api/users?email=${medecinEmail}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const medecins = await medecinRes.json();
@@ -54,7 +55,7 @@ export default function ProposerPartage() {
       return;
     }
 
-    const res = await fetch('http://localhost:5000/api/partages', {
+    const res = await fetch(`${API_URL}/api/partages`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

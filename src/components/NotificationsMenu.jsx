@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
+import API_URL from '../config/api';
 
 export default function NotificationMenu() {
   const [notifications, setNotifications] = useState([]);
@@ -35,7 +36,7 @@ export default function NotificationMenu() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/patient/emails', {
+        const res = await fetch(`${API_URL}/api/patient/emails`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {

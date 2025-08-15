@@ -8,6 +8,7 @@ import {
   Box,
   Alert
 } from '@mui/material';
+import API_URL from '../config/api';
 
 export default function EnvoyerEmail() {
   const [formData, setFormData] = useState({
@@ -42,7 +43,7 @@ export default function EnvoyerEmail() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/medecin/envoyer-email', {
+      const res = await fetch(`${API_URL}/api/medecin/envoyer-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

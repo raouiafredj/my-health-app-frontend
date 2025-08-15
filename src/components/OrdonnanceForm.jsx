@@ -1,7 +1,7 @@
 // src/components/OrdonnanceForm.jsx
 import { useState } from 'react';
 import { Button, TextField, Box, Typography, Alert } from '@mui/material';
-
+import API_URL from '../config/api';
 export default function OrdonnanceForm({ visiteId, onSuccess }) {
   const [medicaments, setMedicaments] = useState([{ nom: '', posologie: '', duree: '', quantite: 1 }]);
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ export default function OrdonnanceForm({ visiteId, onSuccess }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/medecin/visites/${visiteId}/ordonnance`, {
+      const res = await fetch(`${API_URL}/api/medecin/visites/${visiteId}/ordonnance`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

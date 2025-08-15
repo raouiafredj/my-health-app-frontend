@@ -4,6 +4,7 @@ import { IconButton, Badge, Popover, List, ListItem, ListItemText, Typography, D
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { format } from 'date-fns';
 import fr from 'date-fns/locale/fr';
+import API_URL from '../config/api';
 
 export default function NotificationMenu() {
   const [notifications, setNotifications] = useState([]);
@@ -17,7 +18,7 @@ export default function NotificationMenu() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/patient/notifications', {
+        const res = await fetch(`${API_URL}/api/patient/notifications`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {
@@ -41,7 +42,7 @@ export default function NotificationMenu() {
   const handleClose = async () => {
     setAnchorEl(null);
     // Marquer comme lues
-    await fetch('http://localhost:5000/api/patient/notifications/lire', {
+    await fetch(`${API_URL}/api/patient/notifications/lire`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` }
     });

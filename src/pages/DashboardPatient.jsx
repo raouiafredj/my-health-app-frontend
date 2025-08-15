@@ -5,6 +5,7 @@ import DashboardCard from '../components/DashboardCard';
 import { Healing, Description, Today, Email } from '@mui/icons-material';
 import { Container, Grid, Paper, Typography, Alert } from '@mui/material';
 import NotificationsAlert from '../components/NotificationsAlert';
+import API_URL from '../config/api';
 
 export default function DashboardPatient() {
   const [stats, setStats] = useState({
@@ -17,7 +18,7 @@ export default function DashboardPatient() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/patient/stats', {
+      const res = await fetch(`${API_URL}/api/patient/stats`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

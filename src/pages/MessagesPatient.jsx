@@ -12,6 +12,7 @@ import {
   Alert,
   Box
 } from '@mui/material';
+import API_URL from '../config/api';
 
 export default function MessagesPatient() {
   const [emails, setEmails] = useState([]);
@@ -24,7 +25,7 @@ export default function MessagesPatient() {
 
   const fetchEmails = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/patient/emails', {
+      const res = await fetch(`${API_URL}/api/patient/emails`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();

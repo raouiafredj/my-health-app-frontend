@@ -14,6 +14,7 @@ import {
   Divider,
   Alert
 } from '@mui/material';
+import API_URL from '../config/api';
 
 export default function Visites() {
   const [visites, setVisites] = useState([]);
@@ -39,7 +40,7 @@ export default function Visites() {
 
   const fetchVisites = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/medecin/visites', {
+      const res = await fetch(`${API_URL}/api/medecin/visites`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -72,7 +73,7 @@ export default function Visites() {
       .split(' ')
       .map(part => part.charAt(0).toUpperCase() + part.slice(1))
       .join(' ');
-      const res = await fetch('http://localhost:5000/api/medecin/visites', {
+      const res = await fetch(`${API_URL}/api/medecin/visites`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

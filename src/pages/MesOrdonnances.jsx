@@ -17,6 +17,8 @@ import {
 } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { generateVisitePDF } from '../utils/pdfGenerator';
+import API_URL from '../config/api';
+
 export default function MesOrdonnances() {
   const [ordonnances, setOrdonnances] = useState([]);
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ export default function MesOrdonnances() {
   const fetchOrdonnances = async () => {
     try {
       // ✅ Récupérer TOUTES les ordonnances
-      const res = await fetch('http://localhost:5000/api/ordonnances', {
+      const res = await fetch(`${API_URL}/api/ordonnances`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

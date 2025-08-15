@@ -13,6 +13,7 @@ import {
   Divider,
   Alert
 } from '@mui/material';
+import API_URL from '../config/api';
 
 export default function ValidationPartages() {
   const [partages, setPartages] = useState([]);
@@ -22,7 +23,7 @@ export default function ValidationPartages() {
 useEffect(() => {
   const fetchPartages = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/partages/medecin', {
+      const res = await fetch(`${API_URL}/api/partages/medecin`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -38,7 +39,7 @@ useEffect(() => {
 
   const fetchPartages = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/partages/medecin', {
+      const res = await fetch(`${API_URL}/api/partages/medecin`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -49,7 +50,7 @@ useEffect(() => {
   };
 
   const valider = async (id, statut, motif = '') => {
-    await fetch(`http://localhost:5000/api/partages/${id}`, {
+    await fetch(`${API_URL}/api/partages/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

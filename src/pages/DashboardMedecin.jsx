@@ -5,7 +5,7 @@ import DashboardCard from '../components/DashboardCard';
 import { Email as EmailIcon, Healing, Description, Today } from '@mui/icons-material';
 import { Container, Grid, Paper, Typography, Alert } from '@mui/material';
 import EnvoyerEmail from '../components/EnvoyerEmail';
-
+import API_URL from '../config/api';
 export default function DashboardMedecin() {
   const [stats, setStats] = useState({
     visites: 0,
@@ -17,7 +17,7 @@ export default function DashboardMedecin() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/medecin/stats', {
+      const res = await fetch(`${API_URL}/api/medecin/stats`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

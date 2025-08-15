@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Alert, Collapse, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import API_URL from '../config/api';
 
 export default function NotificationsAlert() {
   const [notifications, setNotifications] = useState([]);
@@ -12,7 +13,7 @@ export default function NotificationsAlert() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/patient/notifications', {
+        const res = await fetch(`${API_URL}/api/patient/notifications`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -35,7 +36,7 @@ export default function NotificationsAlert() {
   const handleClose = async () => {
     setOpen(false);
     // ✅ Marquer comme lues
-    await fetch('http://localhost:5000/api/patient/notifications/lire', {
+    await fetch(`${API_URL}/api/patient/notifications/lire`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` }
     });

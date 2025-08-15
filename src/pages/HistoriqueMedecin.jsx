@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import OrdonnanceForm from '../components/OrdonnanceForm';
 import { Container, Paper, Typography, List, ListItem, ListItemText, Divider, Alert } from '@mui/material';
+import API_URL from '../config/api';
 
 export default function HistoriqueMedecin() {
   const [visites, setVisites] = useState([]);
@@ -11,7 +12,7 @@ export default function HistoriqueMedecin() {
 
   const fetchVisites = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/medecin/visites', {
+      const res = await fetch(`${API_URL}/api/medecin/visites`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();

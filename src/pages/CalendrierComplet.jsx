@@ -35,6 +35,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import WarningIcon from '@mui/icons-material/Warning';
 import EventIcon from '@mui/icons-material/Event';
 import DeleteIcon from '@mui/icons-material/Delete';
+import API_URL from '../config/api';
 
 
 // ✅ Initialiser le localizer
@@ -62,7 +63,7 @@ export default function CalendrierComplet() {
 
   const fetchEvents = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/evenements', {
+      const res = await fetch(`${API_URL}/api/evenements`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -98,7 +99,7 @@ export default function CalendrierComplet() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/evenements', {
+      const res = await fetch(`${API_URL}/api/evenements`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +140,7 @@ export default function CalendrierComplet() {
   const handleDelete = async (id) => {
     if (!window.confirm('Supprimer cet événement ?')) return;
     try {
-      await fetch(`http://localhost:5000/api/evenements/${id}`, {
+      await fetch(`${API_URL}/api/evenements/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });

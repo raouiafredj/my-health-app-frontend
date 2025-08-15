@@ -15,6 +15,7 @@ import {
   Divider,
   Alert
 } from '@mui/material';
+import API_URL from '../config/api';
 
 export default function Ordonnances() {
   const [medicaments, setMedicaments] = useState([{ nom: '', posologie: '', duree: '', quantite: 1 }]);
@@ -44,7 +45,7 @@ export default function Ordonnances() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/ordonnances', {
+      const res = await fetch(`${API_URL}/api/ordonnances`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

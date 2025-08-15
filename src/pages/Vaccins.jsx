@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+import API_URL from '../config/api';
 
 export default function Vaccins() {
   const [vaccins, setVaccins] = useState([]);
@@ -28,7 +29,7 @@ export default function Vaccins() {
 
   const fetchVaccins = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/patient/vaccins', {
+      const res = await fetch(`${API_URL}/api/patient/vaccins`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();

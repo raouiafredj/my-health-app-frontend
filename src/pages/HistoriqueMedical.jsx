@@ -16,7 +16,7 @@ import {
   Box
 } from '@mui/material';
 
-
+import API_URL from '../config/api';
 export default function HistoriqueMedical() {
   const [visites, setVisites] = useState([]);
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -28,7 +28,7 @@ export default function HistoriqueMedical() {
 
   const fetchVisites = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/patient/visites', {
+      const res = await fetch(`${API_URL}/api/patient/visites`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();

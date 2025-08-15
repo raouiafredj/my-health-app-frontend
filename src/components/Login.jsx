@@ -13,6 +13,7 @@ import {
   Grid,
   Divider
 } from '@mui/material';
+import API_URL from '../config/api';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ export default function Login() {
     setSuccess('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

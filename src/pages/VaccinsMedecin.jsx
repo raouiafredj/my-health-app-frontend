@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { Container, Paper, Typography, TextField, Button, Box, Alert, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-
+import API_URL from '../config/api';
 export default function VaccinsMedecin() {
   const [formData, setFormData] = useState({
     patientEmail: '',
@@ -22,7 +22,7 @@ export default function VaccinsMedecin() {
 
   const fetchPatients = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/users?role=patient', {
+      const res = await fetch(`${API_URL}/api/users?role=patient`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -39,7 +39,7 @@ export default function VaccinsMedecin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/medecin/vaccins', {
+      const res = await fetch(`${API_URL}/api/medecin/vaccins`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

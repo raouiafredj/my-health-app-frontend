@@ -15,6 +15,7 @@ import {
   IconButton
 } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import API_URL from '../config/api';
 
 export default function MesVisitesPatient() {
   const [visites, setVisites] = useState([]);
@@ -27,7 +28,7 @@ export default function MesVisitesPatient() {
 
   const fetchVisites = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/patient/visites', {
+      const res = await fetch(`${API_URL}/api/patient/visites`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

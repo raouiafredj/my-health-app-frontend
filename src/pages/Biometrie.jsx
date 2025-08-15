@@ -1,6 +1,12 @@
 // src/pages/Biometrie.jsx
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import API_URL from '../config/api';
+
+// ...
+const res = await fetch(`${API_URL}/api/medecin/visites`, {
+  headers: { Authorization: `Bearer ${token}` }
+});
 import {
   Container,
   Paper,
@@ -38,7 +44,7 @@ export default function Biometrie() {
   // src/pages/Biometrie.jsx
 const fetchBiometrie = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/biometrie', {
+    const res = await fetch(`${API_URL}/api/biometrie`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
