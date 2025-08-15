@@ -23,7 +23,8 @@ export default function Visites() {
     date: '',
     type: 'consultation',
     notes: '',
-    patientEmail: ''
+    patientEmail: '',
+     patientNom: ''
   });
   const [emailForm, setEmailForm] = useState({
     destinataire: '',
