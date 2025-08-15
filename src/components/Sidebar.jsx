@@ -33,7 +33,7 @@ export default function Sidebar({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ Récupérez userInfo de manière sécurisée
+  // ✅ Récupération sécurisée de userInfo
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || 'null');
 
   // ✅ Si pas connecté, affichez juste le contenu (ex: login, register)
@@ -55,7 +55,6 @@ export default function Sidebar({ children }) {
     }
   }, [location.pathname, navigate, dashboardPath]);
 
-  // ✅ Menu principal
   const menuItems = isMedecin
     ? [
         { text: 'Mes Visites', icon: <HealingIcon />, path: '/visites' },
@@ -101,14 +100,12 @@ export default function Sidebar({ children }) {
               ? `Dr. ${userInfo.prenom || 'Médecin'} ${userInfo.nom || ''}`
               : `${userInfo.prenom || 'Patient'} ${userInfo.nom || ''}`}
           </Typography>
-          {/* ✅ Notifications uniquement pour le patient */}
           {userInfo?.role === 'patient' && <NotificationMenu />}
         </Toolbar>
 
         <Divider />
 
         <List>
-          {/* Lien vers le dashboard */}
           <ListItem disablePadding>
             <ListItemButton
               onClick={() => navigate(dashboardPath)}
@@ -124,7 +121,6 @@ export default function Sidebar({ children }) {
 
           <Divider sx={{ my: 1 }} />
 
-          {/* Autres items du menu */}
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
               <ListItemButton
