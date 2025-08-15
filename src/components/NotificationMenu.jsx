@@ -5,14 +5,16 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { format } from 'date-fns';
 import fr from 'date-fns/locale/fr';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
 
 export default function NotificationMenu() {
   const [notifications, setNotifications] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
-
+//  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+//  const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
   const unreadCount = notifications.filter(n => !n.lu).length;
 
   useEffect(() => {

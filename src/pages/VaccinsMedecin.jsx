@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { Container, Paper, Typography, TextField, Button, Box, Alert, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
 export default function VaccinsMedecin() {
   const [formData, setFormData] = useState({
     patientEmail: '',
@@ -13,9 +14,10 @@ export default function VaccinsMedecin() {
   });
   const [success, setSuccess] = useState('');
   const [patients, setPatients] = useState([]);
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
-
+//  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  //const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
   useEffect(() => {
     fetchPatients();
   }, []);

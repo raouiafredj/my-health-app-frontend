@@ -17,12 +17,14 @@ import {
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Vaccins() {
   const [vaccins, setVaccins] = useState([]);
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
-
+  //const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  //const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
   useEffect(() => {
     fetchVaccins();
   }, []);

@@ -3,12 +3,15 @@ import { useEffect, useState } from 'react';
 import { Alert, Collapse, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
 
 export default function NotificationsAlert() {
   const [notifications, setNotifications] = useState([]);
   const [open, setOpen] = useState(true);
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
+//  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+//  const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
 
   useEffect(() => {
     const fetchNotifications = async () => {

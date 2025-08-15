@@ -6,6 +6,7 @@ import { Healing, Description, Today, Email } from '@mui/icons-material';
 import { Container, Grid, Paper, Typography, Alert } from '@mui/material';
 import NotificationsAlert from '../components/NotificationsAlert';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
 
 export default function DashboardPatient() {
   const [stats, setStats] = useState({
@@ -14,8 +15,9 @@ export default function DashboardPatient() {
     prochaineVisite: null,
     notifications: 0
   });
-  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
-
+//  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null;
   const fetchStats = async () => {
     try {
       const res = await fetch(`${API_URL}/api/patient/stats`, {

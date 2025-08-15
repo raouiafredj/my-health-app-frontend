@@ -16,6 +16,7 @@ import {
   Alert
 } from '@mui/material';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth'
 
 export default function Ordonnances() {
   const [medicaments, setMedicaments] = useState([{ nom: '', posologie: '', duree: '', quantite: 1 }]);
@@ -24,8 +25,9 @@ export default function Ordonnances() {
   });
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
-  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
-
+//  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
   const ajouterMedicament = () => {
     setMedicaments([...medicaments, { nom: '', posologie: '', duree: '', quantite: 1 }]);
   };

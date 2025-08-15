@@ -37,6 +37,7 @@ import EventIcon from '@mui/icons-material/Event';
 import DeleteIcon from '@mui/icons-material/Delete';
 import API_URL from '../config/api';
 
+import { useAuth } from '../hooks/useAuth';
 
 // ✅ Initialiser le localizer
 const localizer = momentLocalizer(moment);
@@ -55,8 +56,9 @@ export default function CalendrierComplet() {
     priorite: 'moyenne'
   });
 
-  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
-
+//  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+const { token, userInfo } = useAuth(); 
+ if (!userInfo) return null;
   useEffect(() => {
     fetchEvents();
   }, []);

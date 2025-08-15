@@ -6,6 +6,7 @@ import { Email as EmailIcon, Healing, Description, Today } from '@mui/icons-mate
 import { Container, Grid, Paper, Typography, Alert } from '@mui/material';
 import EnvoyerEmail from '../components/EnvoyerEmail';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
 export default function DashboardMedecin() {
   const [stats, setStats] = useState({
     visites: 0,
@@ -13,8 +14,9 @@ export default function DashboardMedecin() {
     rappelsEnvoyes: 0,
     emailsEnvoyes: 0
   });
-  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
-
+  //const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
   const fetchStats = async () => {
     try {
       const res = await fetch(`${API_URL}/api/medecin/stats`, {

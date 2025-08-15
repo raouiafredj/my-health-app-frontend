@@ -15,13 +15,15 @@ import {
   Button,
   Box
 } from '@mui/material';
+import { useAuth } from '../hooks/useAuth';
 
 import API_URL from '../config/api';
 export default function HistoriqueMedical() {
   const [visites, setVisites] = useState([]);
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
-
+  //const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  //const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
   useEffect(() => {
     fetchVisites();
   }, []);

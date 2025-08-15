@@ -11,6 +11,7 @@ import {
   Alert
 } from '@mui/material';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
 
 export default function ProposerPartage() {
   const [formData, setFormData] = useState({
@@ -24,8 +25,10 @@ export default function ProposerPartage() {
   const [error, setError] = useState('');
   const [medecinEmail, setMedecinEmail] = useState('');
   // ✅ Ajoutez cette ligne
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
+//  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+//  const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
 
   const handleChange = (e) => {
     const { name, value } = e.target;

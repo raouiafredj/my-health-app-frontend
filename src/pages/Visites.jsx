@@ -15,7 +15,7 @@ import {
   Alert
 } from '@mui/material';
 import API_URL from '../config/api';
-
+import { useAuth } from '../hooks/useAuth';
 export default function Visites() {
   const [visites, setVisites] = useState([]);
   const [formData, setFormData] = useState({
@@ -31,9 +31,10 @@ export default function Visites() {
     message: ''
   });
   const [success, setSuccess] = useState('');
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
-
+  //const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  //const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null;
   useEffect(() => {
     fetchVisites();
   }, []);

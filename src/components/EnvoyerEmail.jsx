@@ -9,6 +9,7 @@ import {
   Alert
 } from '@mui/material';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
 
 export default function EnvoyerEmail() {
   const [formData, setFormData] = useState({
@@ -18,9 +19,10 @@ export default function EnvoyerEmail() {
   });
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
-
+  //const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+//  const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null;
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

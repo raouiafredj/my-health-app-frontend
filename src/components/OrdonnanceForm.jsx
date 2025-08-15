@@ -2,12 +2,15 @@
 import { useState } from 'react';
 import { Button, TextField, Box, Typography, Alert } from '@mui/material';
 import API_URL from '../config/api';
+import { useAuth } from '../hooks/useAuth';
+
 export default function OrdonnanceForm({ visiteId, onSuccess }) {
   const [medicaments, setMedicaments] = useState([{ nom: '', posologie: '', duree: '', quantite: 1 }]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
-
+//  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
   const handleChange = (index, e) => {
     const newMedicaments = [...medicaments];
     newMedicaments[index][e.target.name] = e.target.value;

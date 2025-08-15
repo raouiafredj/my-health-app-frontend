@@ -18,13 +18,14 @@ import {
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { generateVisitePDF } from '../utils/pdfGenerator';
 import API_URL from '../config/api';
-
+import { useAuth } from '../hooks/useAuth';
 export default function MesOrdonnances() {
   const [ordonnances, setOrdonnances] = useState([]);
   const navigate = useNavigate();
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const token = userInfo?.token;
-
+  //const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+//  const token = userInfo?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
   useEffect(() => {
     fetchOrdonnances();
   }, []);

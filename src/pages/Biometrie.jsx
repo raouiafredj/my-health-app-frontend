@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import API_URL from '../config/api';
-
+import { useAuth } from '../hooks/useAuth';
 // ...
 const res = await fetch(`${API_URL}/api/medecin/visites`, {
   headers: { Authorization: `Bearer ${token}` }
@@ -23,6 +23,7 @@ import {
   Chip
 } from '@mui/material';
 
+
 export default function Biometrie() {
   const [formData, setFormData] = useState({
     poids: '',
@@ -33,9 +34,12 @@ export default function Biometrie() {
     glycemie: '',
     temperature: ''
   });
+  
   const [biometrie, setBiometrie] = useState([]);
   const [success, setSuccess] = useState('');
-  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+  const { token } = useAuth(); 
+  if (!userInfo) return null; 
+  //const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
 
   useEffect(() => {
     fetchBiometrie();

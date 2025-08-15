@@ -14,11 +14,12 @@ import {
   Alert
 } from '@mui/material';
 import API_URL from '../config/api';
-
+import { useAuth } from '../hooks/useAuth';
 export default function ValidationPartages() {
   const [partages, setPartages] = useState([]);
-  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
-
+  //const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+const { token, userInfo } = useAuth(); 
+if (!userInfo) return null; 
 
 useEffect(() => {
   const fetchPartages = async () => {
