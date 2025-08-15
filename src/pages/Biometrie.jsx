@@ -3,10 +3,6 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import API_URL from '../config/api';
 import { useAuth } from '../hooks/useAuth';
-// ...
-const res = await fetch(`${API_URL}/api/medecin/visites`, {
-  headers: { Authorization: `Bearer ${token}` }
-});
 import {
   Container,
   Paper,
@@ -23,7 +19,6 @@ import {
   Chip
 } from '@mui/material';
 
-
 export default function Biometrie() {
   const [formData, setFormData] = useState({
     poids: '',
@@ -34,36 +29,39 @@ export default function Biometrie() {
     glycemie: '',
     temperature: ''
   });
-  
+
   const [biometrie, setBiometrie] = useState([]);
   const [success, setSuccess] = useState('');
-  const { token } = useAuth(); 
-  if (!userInfo) return null; 
-  //const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+
+  // ✅ Déstructurez les deux
+  const { token, userInfo } = useAuth();
+
+  // ✅ Vérifiez userInfo
+  if (!userInfo) return null;
 
   useEffect(() => {
     fetchBiometrie();
-  }, []);
+  }, [token]); // ✅ Ajouté token comme dépendance
 
-  // src/pages/Biometrie.jsx
-const fetchBiometrie = async () => {
-  try {
-    const res = await fetch(`${API_URL}/api/biometrie`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+  const fetchBiometrie = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/biometrie`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error('Erreur API brute:', errorText);
-      return;
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error('Erreur API brute:', errorText);
+        return;
+      }
+
+      const data = await res.json();
+      setBiometrie(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Erreur chargement biométrie:', error);
     }
+  };
 
-    const data = await res.json();
-    setBiometrie(data);
-  } catch (error) {
-    console.error('Erreur chargement biométrie:', error);
-  }
-};
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -71,7 +69,7 @@ const fetchBiometrie = async () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/biometrie', {
+      const res = await fetch(`${API_URL}/api/biometrie`, { // ✅ Utilisez API_URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +102,8 @@ const fetchBiometrie = async () => {
         setSuccess('Données biométriques enregistrées !');
         setTimeout(() => setSuccess(''), 3000);
       } else {
-        alert('Erreur lors de l’enregistrement');
+        const error = await res.json();
+        alert('Erreur: ' + error.message);
       }
     } catch (error) {
       console.error('Erreur:', error);
