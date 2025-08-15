@@ -23,59 +23,55 @@ import {
   LibraryBooks as LibraryBooksIcon,
   CalendarToday as CalendarTodayIcon,
   Logout as LogoutIcon,
-  Email as EmailIcon // ✅ Importez l'icône Email
+  Email as EmailIcon
 } from '@mui/icons-material';
 import NotificationMenu from './NotificationMenu';
-import NotificationsMenu from './NotificationsMenu';
-import MailIcon from '@mui/icons-material/Mail'; 
 
 const drawerWidth = 240;
 
 export default function Sidebar({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const isMedecin = userInfo?.role === 'medecin';
 
-  // ✅ Définir la page d'accueil selon le rôle
+  // ✅ Récupérez userInfo de manière sécurisée
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || 'null');
+
+  // ✅ Si pas connecté, affichez juste le contenu (ex: login, register)
+  if (!userInfo) {
+    return <>{children}</>;
+  }
+
+  const isMedecin = userInfo?.role === 'medecin';
   const dashboardPath = isMedecin ? '/dashboard-medecin' : '/dashboard-patient';
 
-  // ✅ Rediriger automatiquement si on est sur "/" ou une page racine
+  // ✅ Redirection automatique
   React.useEffect(() => {
-  if (
-    location.pathname === '/' ||
-    location.pathname === '/dashboard-medecin' ||
-    location.pathname === '/dashboard-patient'
-  ) {
-    // ✅ Redirige vers le bon dashboard
-    navigate(dashboardPath, { replace: true });
-  }
-}, [location.pathname, navigate, dashboardPath]);
-
+    if (
+      location.pathname === '/' ||
+      location.pathname === '/dashboard-medecin' ||
+      location.pathname === '/dashboard-patient'
+    ) {
+      navigate(dashboardPath, { replace: true });
+    }
+  }, [location.pathname, navigate, dashboardPath]);
 
   // ✅ Menu principal
   const menuItems = isMedecin
     ? [
-       // { text: 'Tableau de bord', icon: <DashboardIcon />, path: '/dashboard-medecin' },
         { text: 'Mes Visites', icon: <HealingIcon />, path: '/visites' },
         { text: 'Ordonnances', icon: <DescriptionIcon />, path: '/ordonnances' },
         { text: 'Valider Partages', icon: <ShareIcon />, path: '/validation-partages' },
         { text: 'Historique Médical', icon: <LibraryBooksIcon />, path: '/historique-medecin' },
-        { text: 'Vaccins', icon: <HealingIcon />, path: '/vaccins-medecin' },
-        
-       
-
+        { text: 'Vaccins', icon: <HealingIcon />, path: '/vaccins-medecin' }
       ]
     : [
-       // { text: 'Tableau de bord', icon: <DashboardIcon />, path: '/dashboard-patient' },
         { text: 'Mes Visites', icon: <HealingIcon />, path: '/mes-visites' },
         { text: 'Mes Ordonnances', icon: <DescriptionIcon />, path: '/mes-ordonnances' },
         { text: 'Biométrie', icon: <MonitorHeartIcon />, path: '/biometrie' },
         { text: 'Partager un médicament', icon: <ShareIcon />, path: '/proposer-partage' },
         { text: 'Historique Médical', icon: <LibraryBooksIcon />, path: '/historique' },
         { text: 'Calendrier', icon: <CalendarTodayIcon />, path: '/calendrier' },
-        { text: 'Vaccins', icon: <HealingIcon />, path: '/vaccins' },
-        
+        { text: 'Vaccins', icon: <HealingIcon />, path: '/vaccins' }
       ];
 
   const handleLogout = () => {
@@ -101,44 +97,25 @@ export default function Sidebar({ children }) {
             component="div"
             sx={{ color: '#1976d2', fontWeight: 'bold', flexGrow: 1 }}
           >
-            {isMedecin ? `Dr. ${userInfo?.prenom} ${userInfo?.nom}` : `${userInfo?.prenom} ${userInfo?.nom}`}
+            {isMedecin
+              ? `Dr. ${userInfo.prenom || 'Médecin'} ${userInfo.nom || ''}`
+              : `${userInfo.prenom || 'Patient'} ${userInfo.nom || ''}`}
           </Typography>
-     
-        </Toolbar>
-        <Toolbar>
-          <Typography
-            variant="h4"
-            noWrap
-            component="div"
-            sx={{ color: '#1976d2', fontWeight: 'bold', flexGrow: 1 }}
-          >
-               {/* ✅ Icône notifications (uniquement pour le patient) */}
+          {/* ✅ Notifications uniquement pour le patient */}
           {userInfo?.role === 'patient' && <NotificationMenu />}
-          {userInfo?.role === 'patient' && <NotificationsMenu />}
-          </Typography>
-       
         </Toolbar>
-
 
         <Divider />
 
         <List>
-          {/* ✅ Lien vers le dashboard */}
+          {/* Lien vers le dashboard */}
           <ListItem disablePadding>
             <ListItemButton
               onClick={() => navigate(dashboardPath)}
-              selected={
-                location.pathname === '/dashboard-medecin' ||
-                location.pathname === '/dashboard-patient'
-              }
-              sx={{
-                '&:hover': { bgcolor: 'rgba(25, 118, 210, 0.08)' },
-                py: 1.2,
-                px: 2
-              }}
+              selected={location.pathname === '/dashboard-medecin' || location.pathname === '/dashboard-patient'}
+              sx={{ '&:hover': { bgcolor: 'rgba(25, 118, 210, 0.08)' }, py: 1.2, px: 2 }}
             >
               <ListItemIcon>
-                
                 <DashboardIcon sx={{ color: '#1976d2' }} />
               </ListItemIcon>
               <ListItemText primary="Tableau de bord" />
@@ -147,17 +124,13 @@ export default function Sidebar({ children }) {
 
           <Divider sx={{ my: 1 }} />
 
-          {/* ✅ Autres items du menu */}
+          {/* Autres items du menu */}
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
               <ListItemButton
                 onClick={() => navigate(item.path)}
                 selected={location.pathname === item.path}
-                sx={{
-                  '&:hover': { bgcolor: 'rgba(25, 118, 210, 0.08)' },
-                  py: 1.2,
-                  px: 2
-                }}
+                sx={{ '&:hover': { bgcolor: 'rgba(25, 118, 210, 0.08)' }, py: 1.2, px: 2 }}
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
